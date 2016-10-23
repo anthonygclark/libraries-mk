@@ -1,0 +1,3 @@
+#!/bin/bash
+# Mean to be called from the root of the repo
+PKG_CONFIG_PATH=./libraries/install-root-${PLATFORM}/lib/pkgconfig pkg-config "$@"

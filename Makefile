@@ -1,15 +1,24 @@
 #!/usr/bin/make -f
 
+PLATFORM  ?= $(shell uname -m)
+
+# Each of these platform makefiles should at least
+# override CC and CXX. If not, the system's default CC and CXX
+# will probably be used...
 -include $(CURDIR)/platforms/$(PLATFORM).mk
 
 # Defaults
-CC        ?= clang
-CXX       ?= clang++
 CFLAGS    ?= -Wall -pedantic -std=c11
 CXXFLAGS  ?= -std=c++14
 PKGCONFIG ?= scripts/pkg-config
-PLATFORM  ?= $(shell uname -m)
 LIBRARIES ?= libraries/srcs/*/
+
+export PLATFORM
+export CC
+export CXX
+export CFLAGS
+export CXXFLAGS
+export PKGCONFIG
 
 define uniq =
   $(eval seen :=)
@@ -26,6 +35,12 @@ LIBS_T  := $(patsubst libraries/srcs/%,libraries/%.token-$(PLATFORM),$(LIBS))
 
 CFLAGS  += -I libraries/install-root-$(PLATFORM)/include
 LDFLAGS += -L libraries/install-root-$(PLATFORM)/lib 
+
+print-%:
+	@echo $* = $($*)
+
+nprint-%:
+	@echo $* = $($*) | tr ' ' '\n'
 
 libraries-prep:
 	@mkdir -p libraries/install-root-$(PLATFORM)
@@ -49,4 +64,9 @@ clean-libraries:
 	@$(RM) libraries/*.token-$(PLATFORM)
 	@$(RM) -r libraries/logs/*-$(PLATFORM)
 	@$(RM) -r libraries/install-root-$(PLATFORM)
+
+clean-all-libraries:
+	@$(RM) libraries/*.token*
+	@$(RM) -r libraries/logs/*
+	@$(RM) -r libraries/install-root-*
 

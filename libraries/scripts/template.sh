@@ -14,6 +14,10 @@ function install()
     
     (( DEBUG )) && "In dir: $(pwd)"
 
+    # DO WORK HERE
+    printenv
+    sleep 5
+
     exit 0
 
 } &>> "$LOG"
@@ -27,10 +31,12 @@ function clean()
 
     (( DEBUG )) && "Cleaning $(get_lib_name $THIS) - $1"
 
+    # DO WORK HERE
+    sleep 3
+
     exit 0
 
 } &>> "$LOG"
-
 
 # Import base functions/vars
 source "$(dirname $(readlink -f $0))"/common.sh || {
@@ -41,5 +47,5 @@ source "$(dirname $(readlink -f $0))"/common.sh || {
 (( DEBUG )) && echo "Invoking $THIS with args = $@"
 
 echo "**** $(date) ****" | tee "$LOG"
-eval "${1} ${2}" & wait_progress "$THIS"
+eval "${1} ${2}" & wait_progress "${THIS} (${2})"
 
