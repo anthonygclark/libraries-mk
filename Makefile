@@ -8,7 +8,7 @@ CXX       ?= clang++
 CFLAGS    ?= -Wall -pedantic -std=c11
 CXXFLAGS  ?= -std=c++14
 PKGCONFIG ?= scripts/pkg-config
-PLATFORM  ?= $(shell uname -n)
+PLATFORM  ?= $(shell uname -m)
 LIBRARIES ?= libraries/srcs/*/
 
 define uniq =
@@ -29,6 +29,9 @@ LDFLAGS += -L libraries/install-root-$(PLATFORM)/lib
 
 libraries-prep:
 	@mkdir -p libraries/install-root-$(PLATFORM)
+	@mkdir -p libraries/srcs
+	@mkdir -p libraries/scripts
+	@mkdir -p libraries/logs
 
 libraries: $(LIBS_T) ;
 	
@@ -46,10 +49,4 @@ clean-libraries:
 	@$(RM) libraries/*.token-$(PLATFORM)
 	@$(RM) -r libraries/logs/*-$(PLATFORM)
 	@$(RM) -r libraries/install-root-$(PLATFORM)
-
-clean:
-	@echo "[CLN]    obj/ bin/"
-	@$(RM) -r obj bin
-
-clean-all: clean clean-libraries
 
