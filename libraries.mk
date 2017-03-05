@@ -24,11 +24,15 @@ LIBS_INSTALL_ROOT := libraries/install-root-$(PLATFORM)
 CFLAGS  += -I libraries/install-root-$(PLATFORM)/include
 LDFLAGS += -L libraries/install-root-$(PLATFORM)/{lib,lib64}
 
+.PHONY: help
+
 print-%:
 	@echo $* = $($*)
 
 nprint-%:
 	@echo $* = $($*) | tr ' ' '\n'
+
+all: libraries
 
 help:
 	@echo "Targets:"
