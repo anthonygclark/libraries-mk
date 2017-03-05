@@ -1,5 +1,4 @@
 #!/usr/bin/make -f
-
 PLATFORM  ?= $(shell uname -m)
 
 # Each of these platform makefiles should at least
@@ -8,9 +7,9 @@ PLATFORM  ?= $(shell uname -m)
 -include $(CURDIR)/platforms/$(PLATFORM).mk
 
 # Defaults
-CFLAGS    ?= -Wall -pedantic -std=c11
-CXXFLAGS  ?= -std=c++14
-PKGCONFIG ?= scripts/pkg-config
+CFLAGS    += -Wall -pedantic -std=c11
+CXXFLAGS  += -std=c++14
+PKGCONFIG ?= libraries/scripts/pkg-config
 LIBRARIES ?= libraries/srcs/*/
 
 LIBS := $(sort $(dir $(wildcard $(LIBRARIES))))
@@ -30,6 +29,24 @@ print-%:
 
 nprint-%:
 	@echo $* = $($*) | tr ' ' '\n'
+
+help:
+	@echo "Targets:"
+	@echo "libraries-prep ....... Creates output directories"
+	@echo "list-libraries ....... Lists the found libs"
+	@echo "clean-libraries ...... Calls uninstall, Removes outputs"
+	@echo "clean-all-libraries .. Removes outputs forcefully"
+	@echo "libraries ............ Triggers build of all libraries"
+	@echo ""
+	@echo "Found libs: $(LIBS)"
+	@echo ""
+	@echo "Debug:"
+	@echo "PLATFORM - $(PLATFORM)"
+	@echo "LIBS_S - $(LIBS_S)"
+	@echo "LIBS_T - $(LIBS_T)"
+	@echo "LIBS_INSTALL_ROOT - $(LIBS_INSTALL_ROOT)"
+	@echo "PKGCONFIG - $(PKGCONFIG)"
+	@echo ""
 
 libraries-prep:
 	@mkdir -p libraries/install-root-$(PLATFORM)
