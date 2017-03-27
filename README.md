@@ -28,15 +28,15 @@ $ make -f libraries.mk list-libraries
 Libraries:  libraries/srcs/template
 ```
 
-#### Integrated Into a real Makefile
+#### Installation / Integration into a makefile-based project:
 
-Clone this repo into your Makefile project. And add:
+Clone this repo into the root of your repo then add:
 
 ```makefile
 -include libraries-mk/libraries.mk
 ```
 
-Then, add any of the recipes in libraries.mk, shown below for convenience, to your rules.
+Then, invoke any of the recipes in libraries.mk, shown below for convenience, to your rules.
 
 ```
 clean-all-libraries
@@ -48,14 +48,26 @@ list-libraries
 
 #### Recipes
 
-Note: See `make -f libraries.mk help`
+Output of `make -f libraries.mk help`
 
-1. `libraries` Builds all libraries
-2. `libraries-prep` sets up the environment for your new sysroot
-3. `list-libraries` debugging output to list all discovered libraries
-4. `clean-libraries` calls the `clean()` function in the library's script. This is nice for removing a single library when you intend to rebuild it or completely remove it without rebuilding everything.
-5. `clean-all-libraries` cleans the entire install-root for the platform. (I might rename this).
+```
+Targets:
+libraries-prep ....... Creates output directories
+list-libraries ....... Lists the found libs
+clean-libraries ...... Calls uninstall, Removes outputs
+clean-all-libraries .. Removes outputs forcefully
+libraries ............ Triggers build of all libraries
 
-#### Contributing
+Found libs:  libraries/srcs/template
 
-Please submit features or patches!
+Debug:
+PLATFORM - x86_64
+LIBS_S - libraries/scripts/template.sh
+LIBS_T - libraries/template.token-x86_64
+LIBS_INSTALL_ROOT - libraries/install-root-x86_64
+PKGCONFIG - libraries/scripts/pkg-config
+```
+
+#### License
+
+BSD
