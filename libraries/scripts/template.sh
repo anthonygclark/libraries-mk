@@ -12,7 +12,7 @@ function install()
     cd "$(get_src_dir)/$(get_lib_name $THIS)" \
         || die "Could not change into src directory for library"
     
-    (( DEBUG )) && "In dir: $(pwd)"
+    (( DEBUG )) && echo "In dir: $(pwd)"
 
     # DO WORK HERE
     printenv

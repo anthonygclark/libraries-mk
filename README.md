@@ -1,6 +1,6 @@
 ### libraries-mk
 
-Note: this is not limited to libraries or anything really, I use it primarily for build and runtime dependencies for C++.
+Note: this is not limited to libraries or anything really, I use it primarily for build and runtime dependencies languages without a builtin package manager or when I have to create large from-scratch runtimes.
 
 Makefile routines (recipes) for building platform specific external code - without a "package manager". This was created to be able to easily track whole-repo dependencies without the need for submodules or relying on package managers to pull external code.
 
@@ -9,6 +9,7 @@ Makefile routines (recipes) for building platform specific external code - witho
 * Libraries are discovered by the existence of `libraries/srcs/<lib>` and the associated build script is assumed to be `libraries/scripts/<lib>.sh`.
 * All build libraries get put into `libraries/install-root-${PLAT}`. 
 * Use `libraries/scripts/pkg-config` for package-config supported libraries. This will just look in the install-root before looking at the system.
+* TODO cmake environment
 
 #### Manual Usage
 
@@ -46,6 +47,8 @@ list-libraries
 ```
 
 #### Recipes
+
+Note: See `make -f libraries.mk help`
 
 1. `libraries` Builds all libraries
 2. `libraries-prep` sets up the environment for your new sysroot
