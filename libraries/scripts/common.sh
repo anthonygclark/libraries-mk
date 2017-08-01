@@ -44,7 +44,6 @@ function wait_progress()
     return $ret
 }
 
-# Error wrapper
 function die()
 {
     echo "Fail: $1"
@@ -69,6 +68,7 @@ function get_src_dir()
 
 function get_log_dir()
 {
+    mkdir -p "libraries/logs"
     printf "%s" "libraries/logs"
 }
 
@@ -79,5 +79,5 @@ function get_log_name()
 
 THIS="$(basename "$0")"
 THIS_DIR="$(dirname $(readlink -f $0))"
-LOG="$(get_log_dir)/$(get_log_name $THIS $2)"
+LOG="$(get_log_dir)/$(get_log_name $THIS $1)"
 DEBUG=0
